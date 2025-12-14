@@ -2,21 +2,29 @@
 
 ## Índice
 
-- [Que es una constante?](#que-es-una-constante)
+- [CONTANTES](#constantes)
+- - [Que es una constante?](#que-es-una-constante)
+- - [Para que sirven?](#para-que-sirven)
+- - [Como se crean las constantes en PHP?](#como-se-crean-las-constantes-en-php)
+- - - [1. Con define()](#1-con-define)
+- - - [2. Con const](#2-con-const)
+- - [Como se usan?](#como-se-usan)
+- - [Contantes dentro de clases](#contantes-dentro-de-clases)
+- - [Ejemplos practicos](#ejemplos-practicos)
 - [OPERADORES](#operadores)
 - - [Que es un Operador en PHP?](#que-es-un-operador-en-php)
-- - - [1. Operadores Aritméticos](#1-operadores-aritmticos)
+- - - [1. Operadores Aritméticos](#1-operadores-aritmeticos)
 - - - [2. Operadores de asignación](#2-operadores-de-asignacion)
 - - - [3. Operadores de comparación](#3-operadores-de-comparacion)
 - - - [4. Operadores lógicos](#4-operadores-logicos)
 - - - [5. Operadores de incremento/decremento](#5-operadores-de-incremento-decremento)
 - - - [6. Operadores de cadenas](#6-operadores-de-cadenas)
 - - - [7. Operadores de Arrays](#7-operadores-de-arrays)
-- - - [8. Operadores a nivel de bits (bitwise)](<#8-operadores-a-nivel-de-bits-(bitwise)>)
+- - - [8. Operadores a nivel de bits (bitwise)](#8-operadores-a-nivel-de-bits)
 - - - [9. Operadores de control de errores](#9-operadores-de-control-de-errores)
-- - - [10. Operadores del tipo (instanceof)](<#10-operadores-del-tipo-(instanceof)>)
-- - - [11. Operador de función null (??)](<#11-operadores-de-funcion-null-(??)>)
-- - - [12. Operador ternario (?:)](<#12-operador-ternario-(?:)>)
+- - - [10. Operadores del tipo (instanceof)](#10-operadores-del-tipo)
+- - - [11. Operador de función null (??)](#11-operador-de-funcion-null)
+- - - [12. Operador ternario (?:)](#12-operador-ternario)
 - [FUNCIONES](#funciones)
 - - [Que es una función?](#que-es-una-funcin)
 - - [Para que sirve una función?](#para-que-sirve-una-funcin)
@@ -32,12 +40,19 @@
 - - - [9. Funciones para Strings Avanzadas](#9-funciones-para-strings-avanzadas)
 - [VARIABLES LOCALES](#variables-locales)
 - [VARIABLES GLOBALES](#variables-globales)
+- [ESTRUCTURAS DE DATOS](#estructuras-de-datos)
+- - [Estructuras principales en PHP](#estructuras-principales-en-php)
+- - [EXTRA: Funciones para organizar arrays](#extra-funciones-para-organizar-arrays)
+- [CADENAS DE CARACTERES](#cadenas-de-caracteres)
+- - [Subcadenas](#subcadenas)
 
 Notas logica de programacion mouredevpro
 
 - "a programar se aprende programando"
 
-## <span style='color:#50E3C2'>Que es una constante?</span>
+## <span style='color:#50E3C2'>CONSTANTES</span>
+
+### <span style='color:#50E3C2'>Que es una constante?</span>
 
 - Es un valor que no cambia durante la ejecución de un Programa
 - Una vez definida, no se puede ni modificar ni eliminar.
@@ -49,6 +64,105 @@ Caracteristicas de una constante
 - Se definen solo una vez
 - Son globales
 - El valor no puede cambiar
+
+### <span style='color:#50E3C2'>Para que sirven?</span>
+
+Se usan para valores que no deben modificarse, como:
+
+- el nombre de la aplicacion
+- la version
+- una clave fija
+- rutas del sistema
+- limites (ej: valor maximo permitido)
+- datos que deben ser siempre iguales
+
+Ejemplos tipicos:
+
+- PI = 3.1416
+- IVA = 0.21
+- APP_NAME = "MiWeb"
+
+### <span style='color:#50E3C2'>Como se crean las constantes en PHP?</span>
+
+1. Con define()
+
+- Esta es la forma clasica
+
+```php
+define("PI", 3.1416);
+define("APP_NAME", "Mi Aplicación");
+```
+
+- Se usan cuando estas fuera de una clase.
+
+2. Con const
+
+- Esta forma se una mayormente dentro de clases, aunque tambien funcionan fuera.
+
+```php
+const VERSION = "1.0";
+const SALT = "abc123";
+```
+
+### <span style='color:#50E3C2'>Como se usan?</span>
+
+Muy facil: simplemente llamas sus nombres sin simbolo $.
+
+```php
+echo PI;
+echo APP_NAME;
+```
+
+### <span style='color:#50E3C2'>Contantes dentro de clases</span>
+
+Cuando defines una constante dentro de una clase, se accede asi:
+
+```php
+class Config {
+  const VERSION = "2.0";
+  const AUTHOR = "Miranda";
+}
+
+echo Config::VERSION: // 2.0
+echo Config::AUTHOR: // Miranda
+```
+
+### <span style='color:#50E3C2'>Ejemplos practicos</span>
+
+Ruta fija del proyecto
+
+```php
+
+define("BASE_PATH", "/var/www/html/");
+
+```
+
+Clave secreta
+
+```php
+
+const SECRET_KEY = "xyz456";
+
+```
+
+Valores matematicos
+
+```php
+
+define("GRAVEDAD", 9.81);
+
+```
+
+Configuracion de clase
+
+```php
+class Database {
+  const HOST = "localhost";
+  const PORT = "3306";
+}
+
+echo Database::HOST;
+```
 
 ## <span style='color:#50E3C2'>OPERADORES</span>
 
@@ -327,6 +441,8 @@ $mensaje = $usuario ?: "Anonimo";
 
 ### <span style='color:#50E3C2'>1. Funciones para Strings</span>
 
+#### <span style='color:#50E3C2'>Longitud y comparacion</span>
+
 strlen()
 
 - longitud del string
@@ -334,6 +450,112 @@ strlen()
 ```php
 echo strlen("Hola"); // 4
 ```
+
+strcmp()
+
+- comparar dos cadenas (sensible a mayusculas) <br>
+  devuelve:
+
+```php
+0 si son iguales
+< 0 si $a < $b
+> 0 si $a > $b
+```
+
+```php
+echo strcmp("hola", "hola"); // 0
+echo strcmp("a", "b"); // -1
+```
+
+strcasecmp()
+
+- comprar sin importar mayusculas
+- util para comparar nombres, email, etc.
+
+```php
+echo strcasecmp("hola", "HOLA"); // 0
+```
+
+#### <span style='color:#50E3C2'>Busca dentro de una cadena</span>
+
+strpos($cadena, $buscado)
+
+- Posicion de la primera aparicion
+
+- Devuelve la posicion o false si no lo encuentra.
+
+```php
+echo strpo("Hola mundo", "m"); // 5
+```
+
+str_contains($cadena, $buscado) (PHP 8+)
+
+- Devuelve true o false
+
+```php
+str_contains("Hola mundo", "mundo"); // true
+```
+
+str_start_with($cadena, $inicio)
+
+```php
+str_start_with("archivo.txt", "arch") // true
+```
+
+str_ends_with($cadena, $final)
+
+```php
+str_ends_with("foto.jpg", "jpg"); // true
+```
+
+#### <span style='color:#50E3C2'>Subcadenas (extraer porciones)</span>
+
+substr($cadena, $inicio, $longitud)
+
+- Extrae una porcion de texto
+- Equivale un slicing de Python
+
+```php
+echo substr("Programar", 0, 4); // Prog
+echo substr("Programar", -4); // amar
+```
+
+mb_substr()
+
+- igual pero para acentos/emojis
+- Muy importante cunado manejas textos UTF-8
+
+```php
+echo mb_substr("Mésica", 0, 4); // Més
+```
+
+substr_replace($cadena, $reemplazo, $inicio, $longitud)
+
+- Reemplaza solo una parte
+
+```php
+echo substr_replace("Hola mundo", "PHP", 5);
+```
+
+#### <span style='color:#50E3C2'>Reemplazar texto</span>
+
+str_replace()
+
+- reemplaza texto
+
+```php
+echo str_replace("mundo", "PHP", "Hola mundo"); // Hola PHP
+```
+
+str_ireplace()
+
+- reemplazo sin distingir mayusculas
+
+```php
+echo str_ireplace("MUNDO", "PHP", "Hola mundo");
+```
+
+#### <span style='color:#50E3C2'>Modificar texto</span>
 
 strtoupper()
 
@@ -351,12 +573,108 @@ strtolower()
 echo strtolower("HOLA"); // hola
 ```
 
-str_replace()
+ucfirst()
 
-- reemplaza texto
+- pone la primera letra en mayusculas
 
 ```php
-echo str_replace("mundo", "PHP", "Hola mundo"); // Hola PHP
+ucfirst("hola mundo") // Hola mundo
+```
+
+ucwords()
+
+- capitaliza cada palabra
+
+```php
+ucfirst("hola mundo php") // Hola Mundo Php
+```
+
+strrev()
+
+- invierte cadena
+
+```php
+strrev("PHP"); // PHP -> PHP (es simetrico)
+strrev("Hola"); // aloH
+```
+
+str_repeat()
+
+- repetir texto
+
+```php
+echo str_repeat("mundo", 3); // mundomundomundo
+```
+
+str_pad($cadena, $largo, $rellleno)
+
+- rellenar
+- Util para crear formatos:
+
+```php
+echo str_pad("7", 3, "0", STR_PAD_LEFT); // 007
+```
+
+#### <span style='color:#50E3C2'>Dividir y unir</span>
+
+explode($separador, $cadena)
+
+- cadena -> array
+
+```php
+explode(",", "a,b,c"); // ["a", "b", "c"]
+```
+
+implode($glue, $array)
+
+- array → cadena
+
+```php
+implode(" - ", ["a", "b", "c"]); // a - b - c
+```
+
+#### <span style='color:#50E3C2'>Limpieza de espacios</span>
+
+trim()
+
+- Quita espacios o caracteres al principio y final.
+
+```php
+trim("  hola  "); // "hola"
+```
+
+ltrim() / rtrim()
+
+- Izquierda o derecha
+
+#### <span style='color:#50E3C2'>Conversión básica</span>
+
+ord($char)
+
+- obtiene el valor ASCII
+
+```php
+ord("A"); // 65
+```
+
+chr($num)
+
+- convierte ASCII en carácter
+
+```php
+chr(65); // "A"
+```
+
+#### <span style='color:#50E3C2'>BONUS: Funciones super comunes para textos dinamicos</span>
+
+sprintf()
+
+- formatear cadenas
+- Perfecto para textos complejos
+
+```php
+echo sprintf("Mi nombre es %s y tengo %d años", "Sara", 22);
+// Mi nombre es Sara y tengo 22 años
 ```
 
 ### <span style='color:#50E3C2'>2. Funciones para Arrays</span>
@@ -387,7 +705,7 @@ array_pop()
 array_pop($frutas);
 ```
 
-array_slice()
+array_splice()
 
 - elimina elementos seleccionados
 - añade un reemplazo o un ítem en la posición de tu elección
@@ -400,7 +718,7 @@ array_slice()
 $frutas = ["manzana","pera","uva","platano"];
 
 // elimina desde la posición 1, 2 elementos
-$eliminados = array_slice($frutas, 1, 2);
+$eliminados = array_splice($frutas, 1, 2);
 
 print_r($frutas);
 print_r($eliminados)
@@ -416,7 +734,7 @@ print_r($eliminados)
 $numeros = [1, 2, 3, 4];
 
 // Inserat "99" en posición 2 sin borrar nada
-array_slice($numeros, 2, 0, [99]);
+array_splice($numeros, 2, 0, [99]);
 
 print_r($numeros);
 
@@ -431,7 +749,7 @@ print_r($numeros);
 $letras = ["a", "b", "c", "d", "e"];
 
 // Corta dedes posiciona 2 hasta el final
-array_slice($letras, 2);
+array_splice($letras, 2);
 
 print_r($letras);
 
@@ -683,3 +1001,177 @@ echo $mensaje; // Salida: Adiós
 ```
 
 Difenrencia practica: $GLOBALS es util cuando quieres acceder dinámicamente por nombre (ej. $GLOBALS[$nombreVar]).
+
+## <span style='color:#50E3C2'>ESTRUCTURAS DE DATOS</span>
+
+### <span style='color:#50E3C2'>Estructuras principales en PHP</span>
+
+Variables basicas
+
+```php
+$nombre = "Miranda";
+$edad = 24;
+$peso = 77.8;
+
+```
+
+Strings
+
+```php
+echo "Hola Mundo";
+```
+
+Integer y floats
+
+```php
+$int = 20;
+$float = 22.5;
+```
+
+Booleanos
+
+```php
+$bool = true;
+$boolNegative = false;
+```
+
+Arrays (indexados, asociativos, y multidimensionales)
+
+```php
+$fruits = ["Mazanas", "Peras", "Platanos", "Cerezas", "Uvas"];
+echo $fruits;
+```
+
+Objetos (creados a partir de clases)
+
+```php
+class Cars { // clase
+  public $brand:
+}
+
+$myCar = new Car();
+$myCar->$brand = "Ford"; // Objeto
+```
+
+Constantes
+
+```php
+define("PI", 3.1416);
+const VERSION = "1.0";
+```
+
+Recursos (resource)
+
+```php
+$archivo = fopen("datos.txt", "r"); // esto es un recurso
+```
+
+Enums (si usas PHP 8.1+)
+
+```php
+enum Estado {
+  case Activo;
+  case Inactivo;
+}
+```
+
+Closures / Funciones como variable
+
+```php
+$saludar = function($nombre) {
+  return "Hola $nombre";
+};
+
+echo $saludar("Miranda");
+
+```
+
+### <span style='color:#50E3C2'>EXTRA: Funciones para organizar arrays</span>
+
+sort()
+
+- Ordena un array indexado por valores( y reinicia los indices)
+
+```php
+<?php
+
+$nums = [3, 1, 2];
+sort($nums);
+print_r($nums); // [1, 2, 3]
+
+$nom = ["Pepe", "Veronica", "Maria"];
+sort($nom);
+print_r($nom); // Maria, Pepe, Veronica
+
+?>
+```
+
+rsort()
+
+- Orden descendente
+
+```php
+$nums = [3, 1, 2];
+rsort($nums);// [3, 2, 1]
+```
+
+asort()
+
+- Ordena por valores pero manteniendo los indices
+
+```php
+$edades = ["Ana" => 20, "Luis" => 18, "Eva" => 30];
+asort($edades);
+// ["Luis" => 18, "Ana" => 20, "Eva" => 30]
+```
+
+ksort()
+
+- Ordena por clave (key) manteniendo la relacion clave-valor
+
+```php
+$persona = ["nombre" => "Ana", "edad" => 25, "pais" => "Perú"];
+ksort($persona);
+// ["edad" => 25, "nombre" => "Ana", "pais" => "Perú"]
+```
+
+asort() y ksort()
+
+- Versiones descendentes (por valores o por claves)
+
+usort
+
+- Orden personalizada usando una funcion comparadora
+
+```php
+$personas = [
+  ["nombre" => "Ana", "edad" => 25],
+    ["nombre" => "Luis", "edad" => 20]
+];
+
+usort($personas, function($a, $b) {
+  return $a["edad"] <=> $b["edad"];
+});
+```
+
+## <span style='color:#50E3C2'>AGREGAR DATOS DEL USUARIO</span>
+
+### <span style='color:#50E3C2'>Existe algo como input en PHP?</span>
+
+Si, pero no con una funcion llamada input()<br>
+PHP obtiene datos del usuario mediante:
+
+- Formularios HTML(metodo mas comun)
+
+```php
+$_POST["nombre"];
+$_GET["id"];
+```
+
+EJ:
+
+```php
+$nombre = $_POST["nombre"]; // input del usuario
+```
+
+Desde la terminal(CLI)
